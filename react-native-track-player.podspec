@@ -18,6 +18,5 @@ Pod::Spec.new do |s|
                     "ios/RNTrackPlayer/Support/**/*.{h,m,swift}"
   s.swift_version = "5.0"
   s.dependency "React"
-  s.dependency "BiotrakHealth/SwiftAudio", "~> 0.11.2"
-  # s.dependency "SwiftAudio"
+  s.dependency "SwiftAudio", '~> 0.11.2'
 end
