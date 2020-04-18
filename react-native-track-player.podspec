@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.version      = package["version"]
   s.summary      = package['description']
   s.license      = package['license']
-  
+
   s.author       = "David Chavez"
   s.homepage     = package['repository']['url']
   s.platform     = :ios, "10.0"
@@ -18,5 +18,5 @@ Pod::Spec.new do |s|
                     "ios/RNTrackPlayer/Support/**/*.{h,m,swift}"
   s.swift_version = "5.0"
   s.dependency "React"
-  s.dependency "SwiftAudio", '~> 0.11.2'
+  s.dependency "SwiftAudio", '~> 0.12'
 end
