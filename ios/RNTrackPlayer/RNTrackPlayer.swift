@@ -80,6 +80,7 @@ public class RNTrackPlayer: RCTEventEmitter {
             "playback-state",
             "playback-error",
             "playback-track-changed",
+            "queued-track-ended",
 
             "remote-stop",
             "remote-pause",
@@ -183,39 +184,30 @@ public class RNTrackPlayer: RCTEventEmitter {
             self?.sendEvent(withName: "playback-error", body: ["error": error?.localizedDescription])
         }
 
-        // GES 4/18/20 - comments as funcitonality is replaced by queueTrackEnded listener below
-//        player.event.playbackEnd.addListener(self) { [weak self] reason in
-//            guard let `self` = self else { return }
-//
-//            if reason == .playedUntilEnd && self.player.nextItems.count == 0 {
-//                self.sendEvent(withName: "playback-queue-ended", body: [
-//                    "track": (self.player.currentItem as? Track)?.id,
-//                    "position": self.player.currentTime,
-//                    ])
-//            } else if reason == .playedUntilEnd {
-//               self.sendEvent(withName: "playback-track-changed", body: [
-//                    "track": (self.player.currentItem as? Track)?.id,
-//                    "position": self.player.currentTime,
-//                    "nextTrack": (self.player.nextItems.first as? Track)?.id,
-//                    ])
-//            }
-//        }
+        player.event.playbackEnd.addListener(self) { [weak self] reason in
+            guard let `self` = self else { return }
 
-        player.event.queueTrackEnded.addListener(self) { [weak self] event in
-            guard let self = self else { return }
-
-            if let nextIndex = event.nextIndex {
-                self.sendEvent(withName: "playback-track-changed", body: [
-                    "track": (self.player.items[event.index] as? Track)?.id,
-                    "position": event.position,
-                    "nextTrack": (self.player.items[nextIndex] as? Track)?.id,
-                     ])
-            } else {
+            if reason == .playedUntilEnd && self.player.nextItems.count == 0 {
                 self.sendEvent(withName: "playback-queue-ended", body: [
                     "track": (self.player.currentItem as? Track)?.id,
                     "position": self.player.currentTime,
                     ])
+            } else if reason == .playedUntilEnd {
+                self.sendEvent(withName: "playback-track-changed", body: [
+                    "track": (self.player.currentItem as? Track)?.id,
+                    "position": self.player.currentTime,
+                    "nextTrack": (self.player.nextItems.first as? Track)?.id,
+                    ])
             }
+        }
+
+        player.event.queueTrackEnded.addListener(self) { [weak self] event in
+            guard let self = self else { return }
+            self.sendEvent(withName: "queued-track-ended", body: [
+                "track": (self.player.items[event.index] as? Track)?.id,
+                "position": event.position,
+                "nextTrack": event.nextIndex==nil ? nil : (self.player.items[event.nextIndex!] as? Track)?.id,
+                ])
         }
 
         player.remoteCommandController.handleChangePlaybackPositionCommand = { [weak self] event in
