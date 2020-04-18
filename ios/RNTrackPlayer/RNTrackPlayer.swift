@@ -176,36 +176,44 @@ public class RNTrackPlayer: RCTEventEmitter {
 
         // setup event listeners
         player.event.stateChange.addListener(self) { [weak self] state in
-            guard let self = self else { return }
-            self.sendEvent(withName: "playback-state", body: ["state": state.rawValue])
-
-            // GES 3/22/20 - emit new track being loaded
-            if (state == .loading) {
-                self.sendEvent(withName: "playback-track-changed", body: [
-                     "track": (self.player.currentItem as? Track)?.id,
-                     "position": self.player.currentTime,
-                     "nextTrack": (self.player.nextItems.first as? Track)?.id,
-                     ])
-            }
+            self?.sendEvent(withName: "playback-state", body: ["state": state.rawValue])
         }
 
         player.event.fail.addListener(self) { [weak self] error in
             self?.sendEvent(withName: "playback-error", body: ["error": error?.localizedDescription])
         }
 
-        player.event.playbackEnd.addListener(self) { [weak self] reason in
-            guard let `self` = self else { return }
+        // GES 4/18/20 - comments as funcitonality is replaced by queueTrackEnded listener below
+//        player.event.playbackEnd.addListener(self) { [weak self] reason in
+//            guard let `self` = self else { return }
+//
+//            if reason == .playedUntilEnd && self.player.nextItems.count == 0 {
+//                self.sendEvent(withName: "playback-queue-ended", body: [
+//                    "track": (self.player.currentItem as? Track)?.id,
+//                    "position": self.player.currentTime,
+//                    ])
+//            } else if reason == .playedUntilEnd {
+//               self.sendEvent(withName: "playback-track-changed", body: [
+//                    "track": (self.player.currentItem as? Track)?.id,
+//                    "position": self.player.currentTime,
+//                    "nextTrack": (self.player.nextItems.first as? Track)?.id,
+//                    ])
+//            }
+//        }
 
-            if reason == .playedUntilEnd && self.player.nextItems.count == 0 {
+        player.event.queueTrackEnded.addListener(self) { [weak self] event in
+            guard let self = self else { return }
+
+            if let nextIndex = event.nextIndex {
+                self.sendEvent(withName: "playback-track-changed", body: [
+                    "track": (self.player.items[event.index] as? Track)?.id,
+                    "position": event.position,
+                    "nextTrack": (self.player.items[nextIndex] as? Track)?.id,
+                     ])
+            } else {
                 self.sendEvent(withName: "playback-queue-ended", body: [
                     "track": (self.player.currentItem as? Track)?.id,
                     "position": self.player.currentTime,
-                    ])
-            } else if reason == .playedUntilEnd {
-               self.sendEvent(withName: "playback-track-changed", body: [
-                    "track": (self.player.currentItem as? Track)?.id,
-                    "position": self.player.currentTime,
-                    "nextTrack": (self.player.nextItems.first as? Track)?.id,
                     ])
             }
         }
