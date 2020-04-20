@@ -182,9 +182,9 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
   - React-jsinspector (0.61.2)
-  - react-native-track-player (1.2.1):
+  - react-native-track-player (1.2.5):
     - React
-    - SwiftAudio (~> 0.11.2)
+    - SwiftAudio (~> 0.12)
   - React-RCTActionSheet (0.61.2):
     - React-Core/RCTActionSheetHeaders (= 0.61.2)
   - React-RCTAnimation (0.61.2):
@@ -220,7 +220,7 @@ PODS:
     - React-cxxreact (= 0.61.2)
     - React-jsi (= 0.61.2)
     - ReactCommon/jscallinvoker (= 0.61.2)
-  - SwiftAudio (0.11.2.1)
+  - SwiftAudio (0.12.2)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -252,7 +252,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - SwiftAudio (from `https://github.com/BiotrakHealth/SwiftAudio.git`, tag `0.11.2.2`)
+  - SwiftAudio (from `https://github.com/BiotrakHealth/SwiftAudio.git`, tag `0.12.2`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -312,14 +312,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   SwiftAudio:
     :git: https://github.com/BiotrakHealth/SwiftAudio.git
-    :tag: 0.11.2.2
+    :tag: 0.12.2
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 CHECKOUT OPTIONS:
   SwiftAudio:
     :git: https://github.com/BiotrakHealth/SwiftAudio.git
-    :tag: 0.11.2.2
+    :tag: 0.12.2
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
@@ -337,7 +337,7 @@ SPEC CHECKSUMS:
   React-jsi: 32285a21b1b24c36060493ed3057a34677d58d09
   React-jsiexecutor: 8909917ff7d8f21a57e443a866fd8d4560e50c65
   React-jsinspector: 111d7d342b07a904c400592e02a2b958f1098b60
-  react-native-track-player: efb73dea3304f12e2fe188992f28e95c9e5c56fe
+  react-native-track-player: 7330a3fcc67703910a63d73e1fdd3b106986d198
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
   React-RCTAnimation: e3cefa93c38c004c318f7ec04b883eb14b8b8235
   React-RCTBlob: d26ac0e313fbf14e7203473fd593ccaaeee8329e
@@ -348,9 +348,9 @@ SPEC CHECKSUMS:
   React-RCTText: e3ef6191cdb627855ff7fe8fa0c1e14094967fb8
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
-  SwiftAudio: d6d5247741cb0eae140db1c210f6f5a25c14c13b
+  SwiftAudio: 3fcf920b67abd1880db3a4f81559c293c276e798
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: ce58e7553145f109181a392cb6254eb20cced2c2
+PODFILE CHECKSUM: a85b788f25bfeb4d7f920f97ebd53927b53a179c
 
 COCOAPODS: 1.9.1
